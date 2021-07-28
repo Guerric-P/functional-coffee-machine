@@ -26,9 +26,7 @@ const proceed = actions => ([ action, data ]) => actions[action](data);
 
 const validate = input => /[TCHM]:.*:\d?/.test(input) ? input : (() => { throw "Invalid input" })()
 
-const loop = () => {
-    rl.question('What do you want to buy?', pipe(validate, parse, proceed(actions), console.log, loop));
-}
+const loop = () => rl.question('What do you want to buy?', pipe(validate, parse, proceed(actions), console.log, loop));
 
 rl.on("close", () => {
     console.log("\nBye!");
