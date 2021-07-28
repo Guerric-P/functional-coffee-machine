@@ -26,7 +26,7 @@ const parse = input => input.split(':');
 
 const proceed = actions => ([ action, data ]) => actions[action](data);
 
-const validate = input => /[TCHM]:\d?:\d?/.test(input) ? input : (() => { throw "Invalid input" })()
+const validate = input => /[TCHM]:.*:\d?/.test(input) ? input : (() => { throw "Invalid input" })()
 
 const main = compose(validate, parse, proceed(actions));
 
