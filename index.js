@@ -5,15 +5,13 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-const compose = (...fns) =>
+const pipe = (...fns) =>
   fns.reduce((prevFn, nextFn) =>
     (...args) => nextFn(prevFn(...args)),
     value => value
   );
 
-const drink = type => number => `Drink maker makes 1 ${type} with ${sugars(number)}`;
-
-const sugars = number => `${number || 'no'} sugar${number && 's'} and ${number ? 'a stick' : 'therefore no stick'}`;
+const drink = type => number => `Drink maker makes 1 ${type} with ${number || 'no'} sugar${number && 's'} and ${number ? 'a stick' : 'therefore no stick'}`;
 
 const actions = {
     T: drink('tea'),
@@ -28,13 +26,11 @@ const proceed = actions => ([ action, data ]) => actions[action](data);
 
 const validate = input => /[TCHM]:.*:\d?/.test(input) ? input : (() => { throw "Invalid input" })()
 
-const main = compose(validate, parse, proceed(actions));
-
 const loop = () => {
-    rl.question('What do you want to buy?', compose(main, console.log, loop));
+    rl.question('What do you want to buy?', pipe(validate, parse, proceed(actions), console.log, loop));
 }
 
-rl.on("close", function() {
+rl.on("close", () => {
     console.log("\nBye!");
     process.exit(0);
 });
