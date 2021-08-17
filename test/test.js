@@ -55,10 +55,19 @@ describe('Coffee machine', () => {
         console.log.should.have.been.calledWith('Drink maker makes 1 tea with no sugar and therefore no stick');
     });
 
+    it('Should return an extra hot tea when enough money provided and no sugar', () => {
+        coffeeMachine('Th:0:1');
+        console.log.should.have.been.calledWith('Drink maker makes 1 extra hot tea with no sugar and therefore no stick');
+    });
+
+    it('Should return an orange juice when enough money provided and no sugar', () => {
+        coffeeMachine('O:0:1');
+        console.log.should.have.been.calledWith('Drink maker makes 1 orange juice with no sugar and therefore no stick');
+    });
+
     it('Should return a message when asked', () => {
         coffeeMachine('M:Hello world!:');
         console.log.should.have.been.calledWith('Hello world!');
     });
-
 });
 
